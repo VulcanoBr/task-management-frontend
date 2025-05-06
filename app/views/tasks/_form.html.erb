@@ -1,0 +1,29 @@
+<%= simple_form_for :task, url: (@task ? project_task_path(@project['id'], @task['id']) : project_tasks_path(@project['id'])), method: (@task ? :put : :post) do |f| %>
+  <%= f.input :name, 
+              label: 'Nome', 
+              input_html: { value: @task ? @task['name'] : '', class: 'form-control' },
+              wrapper_html: { class: 'mb-3' } %>
+  
+  <%= f.input :percentage, 
+              label: 'Percentual de Conclusão (%)', 
+              as: :range,
+              input_html: { 
+                id: 'task_percentage_slider',
+                value: @task ? @task['percentage'] : 0, 
+                class: 'form-control',
+                type: 'range',
+                min: 0,
+                max: 100,
+                step: 5,
+                oninput: "document.getElementById('percentage_output').textContent = this.value + '%'"
+              },
+              wrapper_html: { class: 'mb-3' } %>
+  <output id="percentage_output" for="task_percentage_slider" class="range-value fw-bold">
+      <%= @task ? @task['percentage'] : 0 %>
+  </output>
+  
+  <div class="form-actions mt-4">
+    <%= f.button :submit, (@task ? "Atualizar Tarefa" : "Criar Tarefa"), class: 'btn btn-primary' %>
+    <%= link_to "Cancelar", project_path(@project['id']), class: 'btn btn-outline-secondary ms-2' %>
+  </div>
+<% end %>

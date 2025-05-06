@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Task Management - Autenticação</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+    <%= javascript_importmap_tags %>
+  </head>
+
+  <body class="bg-light">
+    <%= render 'shared/navbar' %>
+    <div class="container">
+      <%= render 'shared/flash_messages' %>
+      <%= yield %>
+    </div>
+    
+    <div class="container">
+      <div class="row">
+        <div class="col-12 text-center mt-5">
+          <p>© <%= Date.today.year %> Task Management</p>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

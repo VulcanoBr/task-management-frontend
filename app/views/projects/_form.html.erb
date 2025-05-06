@@ -1,0 +1,51 @@
+<%= simple_form_for :project, url: (@project ? project_path(@project['id']) : projects_path), method: (@project ? :put : :post) do |f| %>
+  <div class="row">
+    <div class="col-md-6">
+      <%= f.input :name, 
+                  label: 'Nome', 
+                  input_html: { value: @project ? @project['name'] : '', class: 'form-control' },
+                  wrapper_html: { class: 'mb-3' } %>
+    </div>
+    
+    <div class="col-md-6">
+      <%= f.input :status, 
+                  label: 'Status', 
+                  collection: [['Pendente', 'pendente'], ['Em andamento', 'em_andamento'], ['Concluído', 'concluido']],
+                  selected: @project ? @project['status'] : 'pendente',
+                  include_blank: false,
+                  input_html: { class: 'form-select' },
+                  wrapper_html: { class: 'mb-3' } %>
+    </div>
+  </div>
+  
+  <div class="row">
+    <div class="col-md-6">
+      <%= f.input :start_date, 
+                  label: 'Data de Início', 
+                  as: :date, 
+                  html5: true,
+                  input_html: { value: @project && @project['start_date'] ? @project['start_date'] : '', class: 'form-control' },
+                  wrapper_html: { class: 'mb-3' } %>
+    </div>
+    
+    <div class="col-md-6">
+      <%= f.input :end_date, 
+                  label: 'Data de Término', 
+                  as: :date, 
+                  html5: true,
+                  input_html: { value: @project && @project['end_date'] ? @project['end_date'] : '', class: 'form-control' },
+                  wrapper_html: { class: 'mb-3' } %>
+    </div>
+  </div>
+  
+  <%= f.input :description, 
+              label: 'Descrição', 
+              as: :text, 
+              input_html: { value: @project ? @project['description'] : '', class: 'form-control', rows: 5 },
+              wrapper_html: { class: 'mb-3' } %>
+  
+  <div class="form-actions mt-4">
+    <%= f.button :submit, (@project ? "Atualizar Projeto" : "Criar Projeto"), class: 'btn btn-primary' %>
+    <%= link_to "Cancelar", @project ? project_path(@project['id']) : projects_path, class: 'btn btn-outline-secondary ms-2' %>
+  </div>
+<% end %>

@@ -1,0 +1,42 @@
+<div class="jumbotron bg-light p-1 rounded-3">
+  <h1 class="display-4">Task Management</h1>
+  <p class="lead">Bem-vindo ao sistema de gerenciamento de tarefas e projetos.</p>
+  <hr class="my-4">
+  <p>Gerencie seus projetos e tarefas de forma eficiente.</p>
+  <% if user_signed_in? %>
+    <%= link_to "Ver projetos", projects_path, class: "btn btn-primary btn-lg" %>
+  <% else %>
+    <%= link_to "Entrar", login_path, class: "btn btn-primary btn-lg" %>
+  <% end %>
+</div>
+
+<% if user_signed_in? && @projects.present? %>
+  <div class="mt-5">
+    <h2>Seus projetos recentes</h2>
+    
+    <div class="row mt-4">
+      <% @projects.first(3).each do |project| %>
+        <div class="col-md-4">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title"><%= project['name'] %></h5>
+              <p class="card-text"><%= truncate(project['description'], length: 100) %></p>
+              <div class="card-footer bg-transparent border-0">
+                <span class="badge <%= project['status'] == 'em_andamento' ? 'bg-warning' : project['status'] == 'concluido' ? 'bg-success' : 'bg-secondary' %>">
+                  <%= project['status'] == 'em_andamento' ? 'Em andamento' : project['status'] == 'concluido' ? 'Concluído' : 'Pendente' %>
+                </span>
+                <%= link_to "Ver detalhes", project_path(project['id']), class: "btn btn-sm btn-outline-primary float-end" %>
+              </div>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    </div>
+    
+    <% if @projects.size > 3 %>
+      <div class="text-center mt-3">
+        <%= link_to "Ver todos os projetos", projects_path, class: "btn btn-outline-primary" %>
+      </div>
+    <% end %>
+  </div>
+<% end %>

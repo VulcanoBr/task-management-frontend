@@ -1,0 +1,49 @@
+<div class="d-flex justify-content-between align-items-center mb-4">
+  <h1>Projetos</h1>
+  <%= link_to "Novo Projeto", new_project_path, class: "btn btn-primary" %>
+</div>
+
+<% if @projects.present? %>
+  <div class="row">
+    <% @projects.each do |project| %>
+      <div class="col-md-4 mb-4">
+        <div class="card h-100">
+          <div class="card-body">
+            <h5 class="card-title"><%= project['name'] %></h5>
+            <p class="card-text"><%= truncate(project['description'], length: 100) %></p>
+            
+            <div class="mb-2">
+              <% status_class = case project['status']
+                                when 'concluido' then 'bg-success'
+                                when 'em_andamento' then 'bg-warning'
+                                else 'bg-secondary'
+                                end %>
+              <span class="badge <%= status_class %>">
+                <%= project['status'] == 'concluido' ? 'Concluído' : 
+                   project['status'] == 'em_andamento' ? 'Em andamento' : 'Pendente' %>
+              </span>
+            </div>
+            
+            <div class="mb-2 text-muted small">
+              <div><strong>Início:</strong> <%= project['start_date'].present? ? Date.parse(project['start_date']).strftime('%d/%m/%Y') : 'Não definido' %></div>
+              <div><strong>Fim:</strong> <%= project['end_date'].present? ? Date.parse(project['end_date']).strftime('%d/%m/%Y') : 'Não definido' %></div>
+            </div>
+          </div>
+          <div class="card-footer bg-transparent">
+            <div class="btn-group w-100">
+              <%= link_to "Ver", project_path(project['id']), class: "btn btn-sm btn-outline-primary" %>
+              <%= link_to "Editar", edit_project_path(project['id']), class: "btn btn-sm btn-outline-secondary" %>
+              <%= button_to "Excluir", project_path(project['id']), method: :delete, 
+                  class: "btn btn-sm btn-outline-danger", 
+                  form: { data: { turbo_confirm: "Tem certeza que deseja excluir este projeto?" } } %>
+            </div>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+<% else %>
+  <div class="alert alert-info">
+    Nenhum projeto encontrado. <%= link_to "Criar um novo projeto", new_project_path %>.
+  </div>
+<% end %>

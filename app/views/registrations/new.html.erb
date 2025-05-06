@@ -1,0 +1,23 @@
+<div class="auth-form">
+  <h2 class="text-center mb-4">Cadastro</h2>
+
+  <%= simple_form_for :user, url: signup_path do |f| %>
+    <%= f.input :email, 
+                label: 'E-mail',
+                input_html: { class: 'form-control' },
+                wrapper_html: { class: 'mb-3' } %>
+                
+    <%= f.input :password, 
+                label: 'Senha',
+                input_html: { class: 'form-control' },
+                wrapper_html: { class: 'mb-3' } %>
+    
+    <div class="d-grid gap-2 mt-4">
+      <%= f.button :submit, "Cadastrar", class: 'btn btn-primary' %>
+    </div>
+  <% end %>
+  
+  <div class="text-center mt-3">
+    <p>Já tem uma conta? <%= link_to "Entrar", login_path %></p>
+  </div>
+</div>

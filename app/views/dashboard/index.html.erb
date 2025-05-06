@@ -1,0 +1,99 @@
+<h1>Dashboard</h1>
+
+<div class="row mt-4">
+  <div class="col-lg-3 col-md-6">
+    <div class="card text-white bg-primary mb-4">
+      <div class="card-body">
+        <h5 class="card-title">Total de Projetos</h5>
+        <h2 class="display-4"><%= @total_projects %></h2>
+      </div>
+    </div>
+  </div>
+  
+  <div class="col-lg-3 col-md-6">
+    <div class="card text-white bg-success mb-4">
+      <div class="card-body">
+        <h5 class="card-title">Projetos Concluídos</h5>
+        <h2 class="display-4"><%= @completed_projects %></h2>
+      </div>
+    </div>
+  </div>
+  
+  <div class="col-lg-3 col-md-6">
+    <div class="card text-white bg-warning mb-4">
+      <div class="card-body">
+        <h5 class="card-title">Projetos em Andamento</h5>
+        <h2 class="display-4"><%= @in_progress_projects %></h2>
+      </div>
+    </div>
+  </div>
+  
+  <div class="col-lg-3 col-md-6">
+    <div class="card text-white bg-secondary mb-4">
+      <div class="card-body">
+        <h5 class="card-title">Projetos Pendentes</h5>
+        <h2 class="display-4"><%= @pending_projects %></h2>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row mt-2">
+  <div class="col-lg-6">
+    <div class="card mb-4">
+      <div class="card-header">
+        <h5>Progresso de Tarefas</h5>
+      </div>
+      <div class="card-body">
+        <% if @tasks_count > 0 %>
+          <h6 class="text-muted">Total de tarefas: <%= @tasks_count %></h6>
+          <div class="progress">
+            <div class="progress-bar bg-success" role="progressbar" style="width: <%= (@completed_tasks.to_f / @tasks_count * 100).round %>%;">
+              <%= (@completed_tasks.to_f / @tasks_count * 100).round %>%
+            </div>
+          </div>
+          <div class="small text-muted mt-2">
+            <%= @completed_tasks %> de <%= @tasks_count %> tarefas concluídas
+          </div>
+        <% else %>
+          <div class="alert alert-info">
+            Nenhuma tarefa registrada ainda.
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+  
+  <div class="col-lg-6">
+    <div class="card mb-4">
+      <div class="card-header">
+        <h5>Projetos Recentes</h5>
+      </div>
+      <div class="card-body">
+        <% if @projects.present? %>
+          <div class="list-group">
+            <% @projects.first(5).each do |project| %>
+              <%= link_to project_path(project['id']), class: "list-group-item list-group-item-action" do %>
+                <div class="d-flex w-100 justify-content-between">
+                  <h6 class="mb-1"><%= project['name'] %></h6>
+                  <%= status_badge(project['status']) %>
+                </div>
+                <p class="mb-1 text-muted small"><%= truncate(project['description'], length: 80) %></p>
+              <% end %>
+            <% end %>
+          </div>
+          
+          <% if @projects.size > 5 %>
+            <div class="text-center mt-3">
+              <%= link_to "Ver todos os projetos", projects_path, class: "btn btn-sm btn-outline-primary" %>
+            </div>
+          <% end %>
+        <% else %>
+          <div class="alert alert-info">
+            Nenhum projeto encontrado. <%= link_to "Criar um novo projeto", new_project_path %>.
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
