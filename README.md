@@ -15,6 +15,23 @@ Esta aplicação serve como interface de usuário para um sistema de gerenciamen
 - **Interface Responsiva**: Desenvolvida com Bootstrap 5.3.3
 - **Compatibilidade com API Versionada**: Preparado para trabalhar com diferentes versões da API
 
+### Algumas views
+
+. Pagina Principal
+<img src="public/images/pagina_principal.jpeg" alt="página principal">
+
+. Dashboard
+<img src="public/images/dashboard.jpeg" alt="dashboard">
+
+. Lista de Projetos
+<img src="public/images/lista_projetos.jpeg" alt="lista de todos os projetos">
+
+. Detalhes de um Projeto
+<img src="public/images/detalhe_projeto.jpeg" alt="detalhe de um projeto">
+
+. Edição de Tarefa
+<img src="public/images/editar_tarefa.jpeg" alt="editar tarefa">
+
 ## 🛠️ Tecnologias Utilizadas
 
 - **Ruby on Rails 7.2.2**: Framework de desenvolvimento web
